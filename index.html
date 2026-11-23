@@ -1,27 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product CRUD</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Product CRUD</h1>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Gerenciamento</p>
+        <h1>Produtos</h1>
+      </div>
+      <button id="reload-products" class="button button-secondary" type="button">Atualizar lista</button>
+    </header>
 
-  <form id="add-product-form">
-    <h2>Add Product</h2>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" required step="0.01">
-    <button type="submit">Add</button>
-  </form>
+    <section class="layout">
+      <div class="panel stack">
+        <h2>Cadastrar produto</h2>
+        <form id="add-product-form" class="form-grid">
+          <label>
+            Nome
+            <input type="text" id="name" name="name" required placeholder="Ex.: Notebook">
+          </label>
+          <label>
+            Preço
+            <input type="number" id="price" name="price" required step="0.01" min="0" placeholder="0,00">
+          </label>
+          <label class="full-width">
+            Descrição
+            <textarea id="description" name="description" required rows="3" placeholder="Informe uma descrição do produto"></textarea>
+          </label>
+          <button class="button button-primary full-width" type="submit">Adicionar produto</button>
+        </form>
 
-  <ul id="products"></ul>
+        <hr>
+
+        <h2>Consultar por ID</h2>
+        <form id="search-product-form" class="search-row">
+          <label>
+            ID do produto
+            <input type="number" id="search-id" min="1" required placeholder="Ex.: 1">
+          </label>
+          <button class="button button-secondary" type="submit">Consultar</button>
+        </form>
+        <div id="search-result" class="search-result" aria-live="polite"></div>
+      </div>
+
+      <div class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Catálogo</p>
+            <h2>Produtos cadastrados</h2>
+          </div>
+          <span id="product-count" class="count-badge">0 itens</span>
+        </div>
+
+        <ul id="products" class="product-list"></ul>
+        <div id="empty-state" class="empty-state" hidden>Nenhum produto cadastrado.</div>
+      </div>
+    </section>
+
+    <dialog id="update-dialog">
+      <form id="update-product-form" method="dialog" class="dialog-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Editando</p>
+            <h2>Atualizar produto</h2>
+          </div>
+          <button id="close-dialog" class="icon-button" type="button" aria-label="Fechar">×</button>
+        </div>
+
+        <input type="hidden" id="update-id">
+        <label>
+          Nome
+          <input type="text" id="update-name" required>
+        </label>
+        <label>
+          Preço
+          <input type="number" id="update-price" required step="0.01" min="0">
+        </label>
+        <label>
+          Descrição
+          <textarea id="update-description" required rows="4"></textarea>
+        </label>
+
+        <div class="dialog-actions">
+          <button id="cancel-update" class="button button-secondary" type="button">Cancelar</button>
+          <button class="button button-primary" type="submit">Salvar alterações</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
 
   <script src="app.js"></script>
-  <script>
-    // Call fetchProducts() when the page loads
-    window.addEventListener('load', fetchProducts);
-  </script>
 </body>
 </html>
