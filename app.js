@@ -1,4 +1,4 @@
-const API_URL = 'http://3.18.104.5:3000/products';
+const API_URL = 'http://13.58.116.91:3000/products';
 
 const productList = document.querySelector('#products');
 const emptyState = document.querySelector('#empty-state');
