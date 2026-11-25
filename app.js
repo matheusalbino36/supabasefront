@@ -175,7 +175,13 @@ searchProductForm.addEventListener('submit', async event => {
   const id = document.querySelector('#search-id').value;
 
   try {
-    const product = await request(`${API_URL}/${id}`);
+    const result = await request(`${API_URL}/${id}`);
+    const product = Array.isArray(result) ? result[0] : result;
+
+    if (!product) {
+      throw new Error('Produto não encontrado');
+    }
+
     searchResult.innerHTML = `
       <article class="search-card">
         <span class="product-id">#${product.id}</span>
